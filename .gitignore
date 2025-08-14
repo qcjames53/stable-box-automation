@@ -1,0 +1,2 @@
+# Ignore group_vars and host_vars files containing sensitive data
+group_vars/*.yml

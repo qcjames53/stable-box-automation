@@ -6,3 +6,5 @@
   roles:
     - create_vagrant_user
     - forklift_setup
+    - install_packer
+    - packer_build

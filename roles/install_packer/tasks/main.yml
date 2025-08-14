@@ -1,0 +1,50 @@
+
+- name: Check if system is already registered with Red Hat Subscription Manager
+  ansible.builtin.command: subscription-manager status
+  register: rhsm_status
+  ignore_errors: true
+
+- name: Register system with Red Hat Subscription Manager
+  ansible.builtin.command: subscription-manager register --username={{ RHSM_USERNAME }} --password={{ RHSM_PASSWORD }}
+  become: true
+  when: rhsm_status.rc != 0
+  register: rhsm_register_result
+
+- name: Install yum-utils
+  ansible.builtin.yum:
+    name: yum-utils
+    state: present
+
+- name: Add HashiCorp yum repository
+  ansible.builtin.command:
+    cmd: yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
+    creates: /etc/yum.repos.d/hashicorp.repo
+
+- name: Install packer
+  ansible.builtin.yum:
+    name: packer
+    state: present
+
+- name: Install ansible packer plugin
+  ansible.builtin.command: packer plugins install github.com/hashicorp/ansible
+  args:
+    creates: /root/.packer.d/plugins/github.com/hashicorp/ansible
+  async: 30
+  poll: 0
+  ignore_errors: true
+
+- name: Install qemu packer plugin
+  ansible.builtin.command: packer plugins install github.com/hashicorp/qemu
+  args:
+    creates: /root/.packer.d/plugins/github.com/hashicorp/qemu
+  async: 30
+  poll: 0
+  ignore_errors: true
+
+- name: Install vagrant packer plugin
+  ansible.builtin.command: packer plugins install github.com/hashicorp/vagrant
+  args:
+    creates: /root/.packer.d/plugins/github.com/hashicorp/vagrant
+  async: 30
+  poll: 0
+  ignore_errors: true

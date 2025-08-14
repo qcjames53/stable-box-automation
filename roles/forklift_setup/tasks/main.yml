@@ -1,7 +1,14 @@
-- name: Ensure git is installed
+
+- name: Install required packages for forklift (RHEL 9)
   ansible.builtin.package:
-    name: git
+    name:
+      - git
+      - ansible-core
+      - qemu-kvm
+      - qemu-img
+      - vagrant
     state: present
+  become: true
 
 - name: Clone the forklift repository
   ansible.builtin.git:
@@ -10,5 +17,5 @@
     version: HEAD
     update: yes
     force: yes
-  become: yes
   become_user: vagrant
+

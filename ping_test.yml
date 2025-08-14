@@ -1,0 +1,6 @@
+---
+- name: Test connectivity to satlab hosts
+  hosts: satlab
+  tasks:
+    - name: Ping test
+      ansible.builtin.ping:

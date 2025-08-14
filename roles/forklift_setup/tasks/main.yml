@@ -1,0 +1,14 @@
+- name: Ensure git is installed
+  ansible.builtin.package:
+    name: git
+    state: present
+
+- name: Clone the forklift repository
+  ansible.builtin.git:
+    repo: https://github.com/theforeman/forklift
+    dest: /home/vagrant/forklift
+    version: HEAD
+    update: yes
+    force: yes
+  become: yes
+  become_user: vagrant

@@ -1,0 +1,14 @@
+---
+- name: Ensure vagrant group exists
+  ansible.builtin.group:
+    name: vagrant
+    state: present
+
+- name: Ensure vagrant user exists and is in wheel group
+  ansible.builtin.user:
+    name: vagrant
+    groups: wheel
+    append: yes
+    state: present
+    shell: /bin/bash
+    password: $6$rounds=656000$mysecretsalt$fpyQ9hMON6iKKuM0Rz10WZKNJR4OkQTVfBmd4SPrJPsU9XmgQGRtogcUnFB5FLRIitswuQFr6Tr8Mos9l7Ojm0

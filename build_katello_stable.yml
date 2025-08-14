@@ -1,0 +1,8 @@
+---
+- name: Build Katello Stable
+  hosts: satlab
+  become: true
+  gather_facts: true
+  roles:
+    - create_vagrant_user
+    - forklift_setup

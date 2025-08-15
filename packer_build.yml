@@ -1,0 +1,9 @@
+---
+
+# Run with -v
+- name: Build the katello-devel-stable image using packer
+  hosts: satlab
+  become: true
+  gather_facts: true
+  roles:
+    - packer_build

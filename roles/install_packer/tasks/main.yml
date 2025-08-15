@@ -48,3 +48,19 @@
   async: 30
   poll: 0
   ignore_errors: true
+
+- name: Symlink qemu-system-x86_64 to qemu-kvm (dumb packer issue)
+  ansible.builtin.file:
+    src: /usr/libexec/qemu-kvm
+    dest: /usr/bin/qemu-system-x86_64
+    state: link
+    force: true
+  become: true
+
+- name: Symlink sftp-server to the correct binary (dumb packer issue)
+  ansible.builtin.file:
+    src: /usr/lib/sftp-server
+    dest: /usr/libexec/openssh/sftp-server
+    state: link
+    force: true
+  become: true

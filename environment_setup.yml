@@ -1,5 +1,5 @@
 ---
-- name: Build Katello Stable
+- name: Set up build environment
   hosts: satlab
   become: true
   gather_facts: true
@@ -7,4 +7,3 @@
     - create_vagrant_user
     - forklift_setup
     - install_packer
-    - packer_build

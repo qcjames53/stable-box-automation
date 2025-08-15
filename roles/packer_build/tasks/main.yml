@@ -1,12 +1,12 @@
 # Run Packer build as vagrant user in /home/vagrant/forklift/packer
 - name: Run Packer build for centos9-katello-devel-stable
-	become: true
-	become_user: vagrant
-	ansible.builtin.shell: |
-		HCP_CLIENT_ID={{ HCP_CLIENT_ID }} HCP_CLIENT_SECRET={{ HCP_CLIENT_SECRET }} \
-		packer build -var "version=$(date +%Y.%m%d.%H%M)" centos9-katello-devel-stable.json
-	args:
-		chdir: /home/vagrant/forklift/packer
-	environment:
-		HCP_CLIENT_ID: "{{ HCP_CLIENT_ID }}"
-		HCP_CLIENT_SECRET: "{{ HCP_CLIENT_SECRET }}"
+  become: true
+  become_user: vagrant
+  ansible.builtin.shell: |
+    HCP_CLIENT_ID={{ HCP_CLIENT_ID }} HCP_CLIENT_SECRET={{ HCP_CLIENT_SECRET }} \
+    packer build -on-error=ask -var "version=$(date +%Y.%m%d.%H%M)" centos9-katello-devel-stable.json
+  args:
+    chdir: /home/vagrant/forklift/packer
+  environment:
+    HCP_CLIENT_ID: "{{ HCP_CLIENT_ID }}"
+    HCP_CLIENT_SECRET: "{{ HCP_CLIENT_SECRET }}"
